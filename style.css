@@ -117,7 +117,7 @@ nav a:hover::after, nav a.active::after {
 .hero-section {
   position: relative;
   height: 400px;
-  background: linear-gradient(to right, rgba(7, 8, 13, 0.95) 30%, rgba(7, 8, 13, 0.4) 100%), url('banner.jpg');
+  background: linear-gradient(to right, rgba(7, 8, 13, 0.95) 30%, rgba(7, 8, 13, 0.4) 100%), url('images/banner.jpg');
   background-size: cover;
   background-position: center;
   display: flex;

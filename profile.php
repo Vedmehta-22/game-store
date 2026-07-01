@@ -62,12 +62,12 @@ $achievements_count = $games_owned_count * 3; // Dynamic estimation
   <main class="profile-container">
     <!-- Banner -->
     <div class="profile-banner">
-      <img src="banner.jpg" alt="Profile Banner">
+      <img src="images/banner.jpg" alt="Profile Banner">
     </div>
 
     <!-- Profile Header Info -->
     <div class="profile-header-card">
-      <img src="avatar.png" alt="User Avatar" class="profile-avatar">
+      <img src="images/avatar.png" alt="User Avatar" class="profile-avatar">
       <h2><?php echo $username; ?></h2>
       <p class="tagline">Level 15 | Gamer since 2026</p>
       <p class="email">Email: <?php echo $email; ?></p>
@@ -95,15 +95,15 @@ $achievements_count = $games_owned_count * 3; // Dynamic estimation
       <h2 class="section-title">Achievements</h2>
       <div class="achievement-grid">
         <div class="achievement">
-          <img src="trophy.png" alt="Trophy">
+          <img src="images/trophy.png" alt="Trophy">
           <p>First Win</p>
         </div>
         <div class="achievement">
-          <img src="collector.png" alt="Trophy">
+          <img src="images/collector.png" alt="Trophy">
           <p>Collector</p>
         </div>
         <div class="achievement">
-          <img src="speedrun.png" alt="Trophy">
+          <img src="images/speedrun.png" alt="Trophy">
           <p>Marathon Gamer</p>
         </div>
       </div>
