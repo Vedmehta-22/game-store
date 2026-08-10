@@ -75,56 +75,70 @@ $is_in_cart = in_array($id, $_SESSION['cart']);
 <body>
   <!-- Header -->
   <header>
-    <h1>GameStore</h1>
-    <nav>
-      <a href="home.php">Home</a>
-      <a href="library.php">Library</a>
-      <a href="profile.php">Profile</a>
-      <!-- Cart navigation link with dynamic item counter -->
-      <a href="cart.php" class="nav-cart-link">
-        Cart <span class="cart-badge" id="cartBadge"><?php echo count($_SESSION['cart']); ?></span>
-      </a>
-      <!-- ✅ Logout button -->
-      <a href="login.php?logout=true" style="color:#ff007f; font-weight:bold;">Logout</a>
-    </nav>
+    <div class="nav-container">
+      <h1>GameStore</h1>
+      <nav>
+        <a href="home.php">Store</a>
+        <a href="library.php">Library</a>
+        <a href="profile.php">Profile</a>
+        <!-- Cart navigation link with dynamic item counter -->
+        <a href="cart.php" class="nav-cart-link">
+          Cart <span class="cart-badge" id="cartBadge"><?php echo count($_SESSION['cart']); ?></span>
+        </a>
+        <!-- ✅ Logout button -->
+        <a href="login.php?logout=true" style="color: var(--coral); font-weight: bold;">Logout</a>
+      </nav>
+    </div>
   </header>
 
   <!-- Details Content -->
-  <main class="game-detail">
-    <div class="game-detail-header">
-      <h2><?php echo htmlspecialchars($game['title']); ?></h2>
-      <p><?php echo htmlspecialchars($game['bio']); ?></p>
+  <main>
+    <div class="game-detail">
+      <div class="game-detail-grid">
+        <div class="game-detail-left">
+          <div class="game-detail-header">
+            <span class="tag-badge game-detail-genre"><?php echo htmlspecialchars($game['genre']); ?></span>
+            <h2><?php echo htmlspecialchars($game['title']); ?></h2>
+            <p><?php echo htmlspecialchars($game['bio']); ?></p>
+          </div>
 
-      <div class="game-detail-meta-row">
-        <!-- Price Display -->
-        <div class="detail-price-tag">
-          <?php echo $game['price'] == 0 ? 'Free' : '$' . number_format($game['price'], 2); ?>
+          <div class="game-detail-meta-row">
+            <!-- Price Display -->
+            <div class="detail-price-tag">
+              <?php echo $game['price'] == 0 ? 'Free' : '$' . number_format($game['price'], 2); ?>
+            </div>
+
+            <!-- Dynamic Action Buttons -->
+            <div class="detail-actions">
+              <?php if ($is_owned): ?>
+                <a href="library.php" class="detail-btn primary">Play Now</a>
+              <?php elseif ($is_in_cart): ?>
+                <a href="cart.php" class="detail-btn secondary">In Cart (Go to Cart)</a>
+              <?php else: ?>
+                <?php if ($game['price'] == 0): ?>
+                  <!-- Free games can be added directly to the library -->
+                  <a href="game.php?game=<?php echo urlencode($id); ?>&action=add_to_library" class="detail-btn primary">Add to Library</a>
+                <?php else: ?>
+                  <a href="game.php?game=<?php echo urlencode($id); ?>&action=add_to_library" class="detail-btn secondary">Buy Now</a>
+                  <a href="game.php?game=<?php echo urlencode($id); ?>&action=add_to_cart" class="detail-btn primary">Add to Cart</a>
+                <?php endif; ?>
+              <?php endif; ?>
+            </div>
+          </div>
         </div>
 
-        <!-- Dynamic Action Buttons -->
-        <div class="detail-actions">
-          <?php if ($is_owned): ?>
-            <a href="library.php" class="detail-btn primary">Play Now</a>
-          <?php elseif ($is_in_cart): ?>
-            <a href="cart.php" class="detail-btn secondary">In Cart (Go to Cart)</a>
-          <?php else: ?>
-            <?php if ($game['price'] == 0): ?>
-              <!-- Free games can be added directly to the library -->
-              <a href="game.php?game=<?php echo urlencode($id); ?>&action=add_to_library" class="detail-btn primary">Add to Library</a>
-            <?php else: ?>
-              <a href="game.php?game=<?php echo urlencode($id); ?>&action=add_to_library" class="detail-btn secondary">Buy Now</a>
-              <a href="game.php?game=<?php echo urlencode($id); ?>&action=add_to_cart" class="detail-btn primary">Add to Cart</a>
-            <?php endif; ?>
-          <?php endif; ?>
+        <div class="game-detail-right">
+          <!-- Game Cover art -->
+          <img class="game-detail-cover" src="<?php echo $game['image']; ?>" alt="<?php echo htmlspecialchars($game['title']); ?> Cover">
+          
+          <!-- Gallery Subtitle -->
+          <h3 class="gallery-header">Screenshots</h3>
+          
+          <!-- Screenshots Gallery (Populated by script.js) -->
+          <div class="gallery" id="gameGallery"></div>
         </div>
       </div>
     </div>
-
-    <!-- Gallery Subtitle -->
-    <h3 class="gallery-header">Screenshots</h3>
-    
-    <!-- Screenshots Gallery (Populated by script.js) -->
-    <div class="gallery" id="gameGallery"></div>
   </main>
 
   <!-- Modal for large image view -->

@@ -65,75 +65,81 @@ foreach ($_SESSION['cart'] as $game_id) {
 <body>
   <!-- Header -->
   <header>
-    <h1>GameStore</h1>
-    <nav>
-      <a href="home.php">Home</a>
-      <a href="library.php">Library</a>
-      <a href="profile.php">Profile</a>
-      <!-- Cart navigation link with dynamic item counter -->
-      <a href="cart.php" class="active nav-cart-link">
-        Cart <span class="cart-badge" id="cartBadge"><?php echo count($_SESSION['cart']); ?></span>
-      </a>
-      <!-- ✅ Logout button -->
-      <a href="login.php?logout=true" style="color:#ff007f; font-weight:bold;">Logout</a>
-    </nav>
+    <div class="nav-container">
+      <h1>GameStore</h1>
+      <nav>
+        <a href="home.php">Store</a>
+        <a href="library.php">Library</a>
+        <a href="profile.php">Profile</a>
+        <!-- Cart navigation link with dynamic item counter -->
+        <a href="cart.php" class="active nav-cart-link">
+          Cart <span class="cart-badge" id="cartBadge"><?php echo count($_SESSION['cart']); ?></span>
+        </a>
+        <!-- ✅ Logout button -->
+        <a href="login.php?logout=true" style="color: var(--coral); font-weight: bold;">Logout</a>
+      </nav>
+    </div>
   </header>
 
   <!-- Cart Section -->
-  <main class="cart-container">
-    <div class="section-header" style="padding-left: 0; padding-right: 0;">
-      <h2>Your Shopping Cart</h2>
-    </div>
-
-    <?php if (count($cart_items) == 0): ?>
-      <!-- Empty Cart Message -->
-      <div class="empty-cart">
-        <p>Your shopping cart is empty.</p>
-        <a href="home.php" class="hero-btn">Browse Games Store</a>
+  <main>
+    <div class="cart-container">
+      <div class="section-header">
+        <h2>Your Shopping Cart</h2>
       </div>
-    <?php else: ?>
-      <!-- Cart List Table -->
-      <table class="cart-table">
-        <thead>
-          <tr>
-            <th>Game</th>
-            <th>Price</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($cart_items as $id => $game): ?>
-            <tr>
-              <td>
-                <div class="cart-item-info">
-                  <img src="<?php echo $game['image']; ?>" alt="<?php echo htmlspecialchars($game['title']); ?>" class="cart-item-img">
-                  <div>
-                    <div class="cart-item-title"><?php echo htmlspecialchars($game['title']); ?></div>
-                    <div class="cart-item-genre"><?php echo htmlspecialchars($game['genre']); ?></div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="cart-item-price">$<?php echo number_format($game['price'], 2); ?></div>
-              </td>
-              <td>
-                <a href="cart.php?remove=<?php echo urlencode($id); ?>" class="cart-remove-btn">Remove</a>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
 
-      <!-- Cart Total and Checkout Action -->
-      <div class="cart-summary">
-        <div class="cart-total">
-          Total: <span>$<?php echo number_format($total_price, 2); ?></span>
+      <?php if (count($cart_items) == 0): ?>
+        <!-- Empty Cart Message -->
+        <div class="empty-cart">
+          <p>Your shopping cart is empty.</p>
+          <a href="home.php" class="hero-btn">Browse Games Store</a>
         </div>
-        <form action="cart.php" method="POST">
-          <button type="submit" name="checkout" class="checkout-btn">Purchase for myself</button>
-        </form>
-      </div>
-    <?php endif; ?>
+      <?php else: ?>
+        <!-- Cart List Table -->
+        <div class="cart-table-wrapper">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th>Game</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($cart_items as $id => $game): ?>
+                <tr>
+                  <td>
+                    <div class="cart-item-info">
+                      <img src="<?php echo $game['image']; ?>" alt="<?php echo htmlspecialchars($game['title']); ?>" class="cart-item-img">
+                      <div>
+                        <div class="cart-item-title"><?php echo htmlspecialchars($game['title']); ?></div>
+                        <div class="cart-item-genre"><?php echo htmlspecialchars($game['genre']); ?></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cart-item-price">$<?php echo number_format($game['price'], 2); ?></div>
+                  </td>
+                  <td>
+                    <a href="cart.php?remove=<?php echo urlencode($id); ?>" class="cart-remove-btn">Remove</a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Cart Total and Checkout Action -->
+        <div class="cart-summary">
+          <div class="cart-total">
+            Total: <span>$<?php echo number_format($total_price, 2); ?></span>
+          </div>
+          <form action="cart.php" method="POST">
+            <button type="submit" name="checkout" class="checkout-btn">Purchase for myself</button>
+          </form>
+        </div>
+      <?php endif; ?>
+    </div>
   </main>
 
   <!-- Footer -->
